@@ -10,6 +10,8 @@
 <body>
     <div id="app">
         <app-header v-on:pass="logText"></app-header>
+        <app-content v-on:pass2="plus"></app-content>
+        <app-content2 v-bind:propsdata="num"></app-content2>
 
     </div>
 
@@ -20,20 +22,49 @@
         var appHeader = {
             template: '<button v-on:click="passEvent">Click me</button>',
             methods: {
-                passEvent: function() {
+                passEvent: function () {
                     this.$emit('pass');
                 }
             }
         }
+
+        var appContent = {
+            template: '<button v-on:click="passEvent2">Click me2</button>',
+            methods: {
+                passEvent2: function () {
+                    this.$emit('pass2');
+
+                },
+                props: ['propsdata']
+            }
+        }
+
+        var appContent2 = {
+            template: '<div>{{propsdata}}</div>',
+
+            props: ['propsdata']
+        }
+
+
         new Vue({
             el: '#app',
             components: {
-                'app-header': appHeader
+                'app-header': appHeader,
+                'app-content': appContent,
+                'app-content2': appContent2,
             },
             methods: {
-                logText : function() {
+                logText: function () {
+
                     console.log('hi');
+                },
+                plus: function () {
+                    this.num++;
+                    console.log(this.num);
                 }
+            },
+            data: {
+                num: 1
             }
         });
 
